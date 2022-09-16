@@ -8,7 +8,7 @@
 Summary: %{vendor_name} %{driver_name} device drivers
 Name: %{vendor_label}-%{driver_name}-alt
 Version: 5.9.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 
 # Downloaded from https://downloadcenter.intel.com/download/14687/Intel-Network-Adapter-Driver-for-PCIe-Intel-10-Gigabit-Ethernet-Network-Connections-under-Linux-
@@ -52,5 +52,8 @@ find %{buildroot}/lib/modules/%{kernel_version} -name "*.ko" -type f | xargs chm
 /lib/modules/%{kernel_version}/*/*.ko
 
 %changelog
+* Fri Sep 16 2022 Samuel Verschelde <stormi-xcp@ylix.fr> - 5.9.4-2
+- Rebuild for XCP-ng 8.3
+
 * Fri Jan 08 2021 Samuel Verschelde <stormi-xcp@ylix.fr> - 5.9.4-1
 - initial package, version 5.9.4
