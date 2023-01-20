@@ -7,11 +7,11 @@
 
 Summary: %{vendor_name} %{driver_name} device drivers
 Name: %{vendor_label}-%{driver_name}-alt
-Version: 5.9.4
+Version: 5.18.6
 Release: 1%{?dist}
 License: GPL
 
-# Downloaded from https://downloadcenter.intel.com/download/14687/Intel-Network-Adapter-Driver-for-PCIe-Intel-10-Gigabit-Ethernet-Network-Connections-under-Linux-
+# Downloaded from https://www.intel.com/content/www/us/en/download/14302/intel-network-adapter-driver-for-pcie-intel-10-gigabit-ethernet-network-connections-under-linux.html
 Source0: ixgbe-%{version}.tar.gz
 
 BuildRequires: gcc
@@ -52,5 +52,8 @@ find %{buildroot}/lib/modules/%{kernel_version} -name "*.ko" -type f | xargs chm
 /lib/modules/%{kernel_version}/*/*.ko
 
 %changelog
+* Fri Jan 20 2023 Gael Duperrey <gduperrey@vates.fr> - 5.18.6-1
+- Update to version 5.18.6
+
 * Fri Jan 08 2021 Samuel Verschelde <stormi-xcp@ylix.fr> - 5.9.4-1
 - initial package, version 5.9.4
