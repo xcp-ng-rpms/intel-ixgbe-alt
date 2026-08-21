@@ -14,6 +14,8 @@ License: GPL
 # Downloaded from https://downloadcenter.intel.com/download/14687/Intel-Network-Adapter-Driver-for-PCIe-Intel-10-Gigabit-Ethernet-Network-Connections-under-Linux-
 Source0: ixgbe-%{version}.tar.gz
 
+Patch1000: 0001-intel-ixgbe-alt-compat-handle-newer-kernels-with-skb.patch
+
 BuildRequires: gcc
 BuildRequires: kernel-devel
 Provides: vendor-driver

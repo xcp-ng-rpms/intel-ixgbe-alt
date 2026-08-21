@@ -1,0 +1,51 @@
+From 5cdd5886ba141707a607639090af2126d127ffe6 Mon Sep 17 00:00:00 2001
+From: Quentin Casasnovas <quentin.casasnovas@vates.tech>
+Date: Tue, 18 Aug 2026 11:52:51 +0200
+Subject: [PATCH] intel-ixgbe-alt: compat: handle newer kernels with
+ skb_frag_off defined.
+
+d94d95ae0dd0 ("gro: ensure frag0 meets IP header alignment") added the
+definition for skb_frag_off in a linux header, so no need to redefine it.
+
+This fixes a build error when using v4.19.325-cip134 headers to build this
+driver:
+
+  In file included from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_osdep.h:17:0,
+		   from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_type.h:45,
+		   from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_82598.c:4:
+  /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/kcompat.h:7200:28: error: redefinition of 'skb_frag_off'
+   static inline unsigned int skb_frag_off(const skb_frag_t *frag)
+			      ^
+  In file included from ./include/linux/if_ether.h:23:0,
+		   from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_osdep.h:15,
+		   from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_type.h:45,
+		   from /home/builder/rpmbuild/BUILD/ixgbe-5.9.4/src/ixgbe_82598.c:4:
+  ./include/linux/skbuff.h:2818:28: note: previous definition of 'skb_frag_off' was here
+   static inline unsigned int skb_frag_off(const skb_frag_t *frag)
+
+Signed-off-by: Quentin Casasnovas <quentin.casasnovas@vates.tech>
+---
+ src/kcompat.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/kcompat.h b/src/kcompat.h
+index 2596852ca443..400b6484e7ab 100644
+--- a/src/kcompat.h
++++ b/src/kcompat.h
+@@ -7197,11 +7197,12 @@ devlink_flash_update_status_notify(struct devlink __always_unused *devlink,
+ #if (LINUX_VERSION_CODE < KERNEL_VERSION(5,4,0))
+ #if (!(RHEL_RELEASE_CODE >= RHEL_RELEASE_VERSION(8,2)) && \
+      !(SLE_VERSION_CODE >= SLE_VERSION(15,2,0)))
++#if 0
+ static inline unsigned int skb_frag_off(const skb_frag_t *frag)
+ {
+ 	return frag->page_offset;
+ }
+-
++#endif
+ static inline void skb_frag_off_add(skb_frag_t *frag, int delta)
+ {
+ 	frag->page_offset += delta;
+-- 
+2.43.0
+
