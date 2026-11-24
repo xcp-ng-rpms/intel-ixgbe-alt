@@ -8,7 +8,7 @@
 Summary: %{vendor_name} %{driver_name} device drivers
 Name: %{vendor_label}-%{driver_name}-alt
 Version: 5.9.4
-Release: 2.0.kernelpreview.1%{?dist}
+Release: 2.0.kernelpreview.1.0.testv0.1%{?dist}
 License: GPL
 
 # Downloaded from https://downloadcenter.intel.com/download/14687/Intel-Network-Adapter-Driver-for-PCIe-Intel-10-Gigabit-Ethernet-Network-Connections-under-Linux-
